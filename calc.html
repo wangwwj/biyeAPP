@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>webrx-title</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="简介">
+<meta name="keywords" content="关键字">
+<style>
+	*{ margin:0; padding: 0; box-sizing:border-box;};
+	.calc{}
+	.calc .showbox{ height: 30vh;width: 100vw; background-color: rgb(227,231,234); display: flex; }
+	 .showbox input{ flex:1; background-color: transparent; border:none; font-size: 7vw; padding:7vw;}
+    .calc .buttons{  width: 100vw; display: flex; flex-wrap:wrap; flex-direction:column; }
+    .buttons input{flex:0 0 25vw;height: 25vw;box-sizing:border-box; font-size: 7vw; }
+    .buttons .grow2{ flex:0 0 50vw; }
+    .buttons .equal{ height: 50vw; margin-top: -25vw; background-color: rgb(250,116,45); color: #fff; border:none;}
+    .buttons .equal:active{ background-color: rgb(240,106,45);}
+    .row{ display: flex;}
+    @media screen and (min-width:768px){
+    	.calc .showbox{ height: 70vh;}
+    	.calc{transform:scale(0.3,0.3); transform-origin:0 0;}
+    }
+</style>
+
+
+
+<body>
+<div class="calc">
+	<div class="showbox">
+		<input type="text" id="show">
+	
+	</div>
+	<div class="buttons">
+	<div class="row">
+		<input type="button" value="c" id="cle">
+		<input type="button" value="←" id="del">
+		<input type="button" value="÷">
+		<input type="button" value="×">
+	</div>
+	<div class="row">
+		<input type="button" value="7">
+		<input type="button" value="8">
+		<input type="button" value="9">
+		<input type="button" value="-">
+	</div>
+	<div class="row">
+		<input type="button" value="4">
+		<input type="button" value="5">
+		<input type="button" value="6">
+		<input type="button" value="+">
+	</div>
+	<div class="row">
+		<input type="button" value="1">
+		<input type="button" value="2">
+		<input type="button" value="3">
+	</div>
+	<div class="row">
+		
+		<input type="button" value="0" class="grow2">
+		<input type="button" value=".">
+		<input type="button" value="=" class="equal" id="equal"> 
+	</div>
+	</div>
+</div>
+<script>
+	var buttons=document.getElementsByClassName("buttons")[0];
+	var inputs=buttons.getElementsByTagName("input");
+	var show=document.getElementById("show");
+	var del=document.getElementById("del");
+	var equal=document.getElementById("equal");
+	var cle=document.getElementById("cle");
+	for(var i=0;i<inputs.length;i++){
+		if(inputs[i]==del||inputs[i]==equal||inputs[i]==cle){
+			continue;
+		}
+
+		inputs[i].onclick=function(){
+			show.value+=this.value;
+
+		}
+	}
+	equal.onclick=function(){
+		var reg1=/÷/g;
+		var reg2=/×/g;
+	   var newval=show.value.replace(reg1,"/");
+	   newval=newval.replace(reg2,"*");
+		show.value=eval(newval);
+	}
+	cle.onclick=function(){
+		show.value="";
+	}
+	del.onclick=function(){
+		var len=show.value.length;
+		show.value=show.value.substring(0,len-1);
+	}
+
+</script>
+</body>
+</html>
